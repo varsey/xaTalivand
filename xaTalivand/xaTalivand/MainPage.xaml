@@ -20,7 +20,7 @@
             <Entry
             x:Name="CityName"
 			HorizontalOptions="FillAndExpand"
-			Placeholder="Enter city name"
+			Placeholder="Search"
 			/>
             <Button
 			Text="GO"

@@ -33,8 +33,7 @@ namespace xaTalivand
         [Obsolete]
         public void OnClickGoButton(object sender, EventArgs e)
         {
-            string off = "";
-            string on = "";
+            string output = "";
             var City = CityName.Text;
             var RC = new RestClient();
             var Request = new RestRequest("http://talivandr.site/db/talivandr_db1.json");
@@ -42,20 +41,18 @@ namespace xaTalivand
             RC.ExecuteAsyncGet(Request, (IRestResponse response, RestRequestAsyncHandle arg2) =>
             {
                 var item = JsonConvert.DeserializeObject<List<RootObject>>(response.Content);
-                var output = item[1].Term.ToString();
-                var str = item[1].Term.Contains(City.ToString()).ToString();
 
                 for (int i = 0; i < item.Count; i++)
                 {
                     if (item[i].Term.Contains(City.ToString()))
                     {
-                        on = on + "\n" + item[i].Term.ToString();
+                        output = output + "\n" + item[i].Term.ToString();
                     }
                 }
 
                 MainThread.BeginInvokeOnMainThread(() =>
                 {
-                    Temperature.Text = on + "\n" + " " + off;
+                    Temperature.Text = output;
                     CityName.Text = "";
                     CityName.IsEnabled = true;
                 });
