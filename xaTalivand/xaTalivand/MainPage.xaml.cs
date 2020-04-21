@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using RestSharp;
 using System;
 using System.Collections.Generic;
@@ -15,10 +16,6 @@ namespace xaTalivand
     public partial class MainPage : ContentPage
     {
         public class RootObject
-        {
-            public List<Dict> dict { get; set; }
-        }
-        public class Dict
         {
             public string ID { get; set; }
             public string Term { get; set; }
@@ -38,17 +35,16 @@ namespace xaTalivand
         {
             var City = CityName.Text;
             var RC = new RestClient();
-            var Request = new RestRequest("http://talivandr.site/db/talivandr_db.json");
+            var Request = new RestRequest("http://talivandr.site/db/talivandr_db1.json");
 
             RC.ExecuteAsyncGet(Request, (IRestResponse response, RestRequestAsyncHandle arg2) =>
             {
-                var Data = JsonConvert.DeserializeObject<Dict>(response.Content);
-                
-                //var icon = Data.ToString();
+                var item = JsonConvert.DeserializeObject<List<RootObject>>(response.Content);
+                var output = item[1].Term.ToString();
 
                 MainThread.BeginInvokeOnMainThread(() =>
                 {
-                    Temperature.Text = City.ToString() + " :"; // + icon.ToString();
+                    Temperature.Text = output.ToString();
                     CityName.Text = "";
                     CityName.IsEnabled = true;
                 });
