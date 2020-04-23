@@ -36,7 +36,7 @@ namespace xaTalivand
             string output = "";
             var City = CityName.Text;
             var RC = new RestClient();
-            var Request = new RestRequest("http://talivandr.site/db/talivandr_db1.json");
+            var Request = new RestRequest("http://varsey.pythonanywhere.com/static/talivandr_db.json");
 
             RC.ExecuteAsyncGet(Request, (IRestResponse response, RestRequestAsyncHandle arg2) =>
             {
@@ -46,7 +46,7 @@ namespace xaTalivand
                 {
                     if (item[i].Term.Contains(City.ToString()))
                     {
-                        output = output + "\n" + item[i].Term.ToString();
+                        output = output + "\n" + item[i].Term.ToString() + ":\n" + item[i].Translation.ToString() + "\n\n";
                     }
                 }
 
